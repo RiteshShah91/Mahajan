@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DonarsRepository extends JpaRepository<Donars, String> {
 
-    @Query("select d from Donars d where d.status != 'Deleted' order by d.CreatedDate desc")
+    @Query("select d from Donars d where d.status != 'Deleted' order by d.createdDate desc")
     public List<Donars> findAll();
 
 }
