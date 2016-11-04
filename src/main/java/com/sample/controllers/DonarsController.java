@@ -107,20 +107,20 @@ public class DonarsController {
         donarsService.save(donar);
         model.addAttribute("m", "c");
 
-        for (int i = 0; i < 100; i++) {
-            Donars donar1 = new Donars();
-            donar1.setName(request.getParameter("donarname") + i);
-            donar1.setPhone(request.getParameter("phone") + i);
-            donar1.setMobile(request.getParameter("mobile"));
-            donar1.setAddress(request.getParameter("address") + i);
-            donar1.setDateOfFirstDonation(new DateUtils().stringToDate(request.getParameter("donation_date"), "dd-MMMM-yyyy"));
-            donar1.setCreatedDate(new Date());
-            donar1.setModifiedDate(new Date());
-            donar1.setStatus("Active");
-            donar1.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
-            donarsService.save(donar1);
-            model.addAttribute("m", "c");
-        }
+//        for (int i = 0; i < 100; i++) {
+//            Donars donar1 = new Donars();
+//            donar1.setName(request.getParameter("donarname") + i);
+//            donar1.setPhone(request.getParameter("phone") + i);
+//            donar1.setMobile(request.getParameter("mobile"));
+//            donar1.setAddress(request.getParameter("address") + i);
+//            donar1.setDateOfFirstDonation(new DateUtils().stringToDate(request.getParameter("donation_date"), "dd-MMMM-yyyy"));
+//            donar1.setCreatedDate(new Date());
+//            donar1.setModifiedDate(new Date());
+//            donar1.setStatus("Active");
+//            donar1.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
+//            donarsService.save(donar1);
+//            model.addAttribute("m", "c");
+//        }
 
         return "redirect:/Donars/";
     }
@@ -203,4 +203,34 @@ public class DonarsController {
         }
         return "redirect:/Donars/";
     }
+
+    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+    public String filterSearch(HttpServletRequest request, Model model) {
+        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+
+            String mobile = "", name = "", address = "";
+            if (request.getParameter("mobile") != null) {
+                if (request.getParameter("mobile").length() > 0) {
+                    mobile = request.getParameter("mobile");
+                }
+            }
+            if (request.getParameter("name") != null) {
+                if (request.getParameter("name").length() > 0) {
+                    name = request.getParameter("name");
+                }
+            }
+            if (request.getParameter("address") != null) {
+                if (request.getParameter("address").length() > 0) {
+                    address = request.getParameter("address");
+                }
+            }
+
+            List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
+            model.addAttribute("donarsList", list);
+            return "Donars/List";
+        } else {
+            return "redirect:/Auth/";
+        }
+    }
+
 }

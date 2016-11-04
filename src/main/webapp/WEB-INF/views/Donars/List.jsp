@@ -68,6 +68,31 @@
                             <div class="panel-heading">
                                 Donar List
                             </div>
+                            <br/>
+                            <%CheckInput checkInput = new CheckInput();%>
+                            <form method="post" action='<%=request.getContextPath()%>/Donars/filter'>
+                                <table>
+                                    <tr>
+                                        <td style="padding-right: 7px;  padding-left: 15px;">Filter By: </td>
+                                        <td style="padding-right: 7px;">
+                                            <input style="width: 100%;" type="text" id="name" name="name" value="<%=checkInput.checkValue(request.getParameter("name"))%>" placeholder="Name" class="form-control">
+                                        </td>
+                                        <td style="padding-right: 7px;">
+                                            <input style="width: 100%;" type="text" id="mobile" value="<%=checkInput.checkValue(request.getParameter("mobile"))%>" name="mobile" placeholder="Mobile" class="form-control">
+                                        </td>
+                                        <td style="padding-right: 7px;">
+                                            <input style="width: 100%;" type="text" id="address" name="address" value="<%=checkInput.checkValue(request.getParameter("address"))%>" placeholder="Address/City" class="form-control">
+                                        </td>
+                                        <td style="padding-right: 7px;">
+
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-default" type="submit" value="Search"><i class="glyphicon glyphicon-search"></i></button>
+                                            <a class="btn btn-default" href="<%=request.getContextPath()%>/Donars/"><i class="glyphicon glyphicon-refresh"></i> </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">

@@ -21,5 +21,7 @@ public interface DonarsService {
 
     public List<Donars> findWithLimitAndOffset(int length, int start);
 
+    public List<Donars> findByFilterParameter(String mobile, String name, String address);
+
 
 }
