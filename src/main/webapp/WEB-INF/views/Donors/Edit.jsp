@@ -1,6 +1,15 @@
-<%@page import="com.sample.utils.CheckInput"%>
+<%-- 
+    Document   : output
+    Created on : Oct 1, 2016, 2:23:40 PM
+    Author     : Administrator
+--%>
+
+<%@page import="com.sample.utils.DateUtils"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="com.sample.utils.CheckInput"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
+<%@page import="com.sample.entities.Donars"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -13,7 +22,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/bootstrap/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/bootstrap/css/bootstrap.css">
 
-    <title>Donars Diary</title>
+    <title>Donors Diary - Edit</title>
 </head>
 <body>
     <div id="wrapper">
@@ -27,12 +36,16 @@
                         <br/>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Add New Donar</h3>
+                                <h3 class="panel-title">Update Donor</h3>
                             </div>
                             <div class="panel-body">
                             <%
                                 CheckInput checkInput = new CheckInput();
-                                if (request.getAttribute("errors") != null) {
+                                if (request.getAttribute("donar") != null) {
+                                    Donars donar = (Donars) request.getAttribute("donar");
+
+                            %>
+                            <%                               if (request.getAttribute("errors") != null) {
                                     List<String> errors = (List<String>) request.getAttribute("errors");
                                     if (!errors.isEmpty()) {
                             %>
@@ -50,44 +63,49 @@
                             </div>
                             <%
                                 }
+
                             %>
-                            <div class="alert alert-danger alert-dismissable" style="display: none;">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <div id="msg"></div>
-                            </div>
-                            <form id="task-create" method="POST" action="<%=request.getContextPath()%>/Donars/postcreate">
+                            <!--                            <div class="alert alert-danger alert-dismissable" style="display: none;">
+                                                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                            <div id="msg"></div>
+                                                        </div>-->
+                            <form role="form" method="POST" action="<%=request.getContextPath()%>/Donors/postedit/<%=donar.getId()%>">
                                 <fieldset>
                                     <div class="form-group">
-                                        <label>Donar Name* : </label>
-                                        <input required class="form-control" id="donarname" value="<%=checkInput.checkValue(request.getParameter("donarname"))%>" placeholder="Donar Full Name" name="donarname" type="text" autofocus>
+                                        <label>Donor Name* : </label>
+                                        <input required class="form-control" id="donarname" value="<%=checkInput.checkValueEdit(donar.getName(), request.getParameter("donarname"))%>" placeholder="Donor's Full Name" name="donarname" type="text" autofocus>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Mobile No. : </label>
-                                        <input class="form-control" id="mobile" value="<%=checkInput.checkValue(request.getParameter("mobile"))%>" placeholder="Mobile Number" name="mobile" type="text">
+                                        <input class="form-control" id="mobile" value="<%=checkInput.checkValueEdit(donar.getMobile(), request.getParameter("mobile"))%>" placeholder="Mobile Number" name="mobile" type="text">
                                     </div>
 
                                     <div class="form-group">
                                         <label>Phone No. : </label>
-                                        <input class="form-control" id="phone" value="<%=checkInput.checkValue(request.getParameter("phone"))%>" placeholder="Phone/Land Line Number" name="phone" type="text">
+                                        <input class="form-control" id="phone" value="<%=checkInput.checkValueEdit(donar.getPhone(), request.getParameter("phone"))%>" placeholder="Phone/Land Line Number" name="phone" type="text">
                                     </div>
 
                                     <div class="form-group">
                                         <label>Address : </label>
-                                        <textarea class="ckeditor" cols="80" id="editor" name="address" rows="10"><%=checkInput.checkValue(request.getParameter("address"))%></textarea>
+                                        <textarea class="ckeditor" cols="80" id="editor" name="address" rows="10"><%=checkInput.checkValueEdit(donar.getAddress(), request.getParameter("address"))%></textarea>
                                     </div>
 
                                     <div class="form-group">
                                         <label>First Donation date : </label>
-                                        <input type="text" id="donation_date" name="donation_date" value="<%=checkInput.checkValue(request.getParameter("donation_date"))%>" class="form-control" placeholder="Donation Date">
+                                        <input type="text" id="donation_date" name="donation_date" value="<%=checkInput.checkValueEdit(new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"), request.getParameter("donation_date"))%>" class="form-control" placeholder="Donation Date">
                                     </div>
+
 
                                     <div class="form-group">
                                         <input id="submit" type="submit" class="btn btn-md btn-success" value="Save">
-                                        <a class="btn btn-md btn-danger" href="<%=request.getContextPath()%>/Donars/">Cancel</a>
+                                        <a class="btn btn-md btn-danger" href="<%=request.getContextPath()%>/Donors/">Cancel</a>
                                     </div>
                                 </fieldset>
                             </form>
+                            <%} else {%>
+                            No Data Found !
+                            <%}%>
                         </div>
                     </div>
                 </div>
@@ -118,44 +136,13 @@
             ]
         });
 
-        $(function () {
-//            $("#submit").click(function (event) {
-//                event.preventDefault();
-//                $('#proccess').show();
-//                $('#submit').attr('disabled', 'disabled');
-//                $.ajax({
-//                    type: "GET",
-//                    contentType: "html",
-//                    dataType: 'html',
-//                    url: "<%=request.getContextPath()%>/Donars/postcreate",
-//                    data: {donarname: $("#donarname").val(), address: editor.getData(), mobile: $("#mobile").val(),
-//                        phone: $("#phone").val(), donation_date: $("#donation_date").val()},
-//                    async: false,
-//                    success: function (response) {
-////                        $("#proccess").css("display", "none");
-//                        var data = response.split(":");
-//                        if (data[1] === 'err') {
-//                            $("#msg").html(data[0]);
-//                            $('.alert-danger').show();
-//                            $('html, body').animate({
-//                                scrollTop: $("body").offset().top
-//                            }, 500);
-//                            $("#submit").removeAttr("disabled");
-//                        } else {
-//                            console.log(data[1]);
-//                            window.location.href = data[0];
-//
-//                        }
-//                    }
-//                });
-//            });
 
-            $('#donation_date').datepicker({
-                maxDate: '0d',
-                format: "dd-MM-yyyy",
-                autoclose: true
-            });
+        $('#donation_date').datepicker({
+            maxDate: '0d',
+            format: "dd-MM-yyyy",
+            autoclose: true
         });
     </script>
 </body>
+
 </html>

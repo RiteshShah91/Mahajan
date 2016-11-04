@@ -41,7 +41,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/Auth/">Task Management</a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/Auth/">Donors Diary</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -276,7 +276,7 @@
                         <a href="<%=request.getContextPath()%>/Users/"><i class="fa fa-user fa-fw"></i> Users</a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/Donars/"><i class="fa fa-users fa-fw"></i> Donars</a>
+                        <a href="<%=request.getContextPath()%>/Donors/"><i class="fa fa-users fa-fw"></i> Donors</a>
                     </li>
                     <!--                        <li>
                                                 <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>

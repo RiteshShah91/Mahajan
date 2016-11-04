@@ -14,7 +14,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Donars</title>
+        <title>Donors Diary - List</title>
     </head>
 
     <body>
@@ -26,7 +26,7 @@
                 <div id="page-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">Donars</h1>
+                            <h1 class="page-header">Donors</h1>
 
                         <%
                             CheckInput checkinput = new CheckInput();
@@ -36,7 +36,7 @@
 
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            Donar Added Successfully..!
+                            Donor Added Successfully..!
                         </div>
                         <%}
                             if (request.getParameter("m").equals("e")) {
@@ -44,14 +44,14 @@
 
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            Donar Updated Successfully..!
+                            Donor Updated Successfully..!
                         </div>
                         <%} else if (request.getParameter("m").equals("d")) {
                         %>
 
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            Donar Deleted Successfully..!
+                            Donor Deleted Successfully..!
                         </div>
                         <%}%>
                     </div>
@@ -61,16 +61,16 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <a href="<%=request.getContextPath()%>/Donars/create" class="btn btn-md btn-success" style="text-align: left;">Add New Donar </a>
+                        <a href="<%=request.getContextPath()%>/Donors/create" class="btn btn-md btn-success" style="text-align: left;">Add New Donor </a>
                         <br/><br/>
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Donar List
+                                Donor List
                             </div>
                             <br/>
                             <%CheckInput checkInput = new CheckInput();%>
-                            <form method="post" action='<%=request.getContextPath()%>/Donars/filter'>
+                            <form method="post" action='<%=request.getContextPath()%>/Donors/filter'>
                                 <table>
                                     <tr>
                                         <td style="padding-right: 7px;  padding-left: 15px;">Filter By: </td>
@@ -88,7 +88,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-default" type="submit" value="Search"><i class="glyphicon glyphicon-search"></i></button>
-                                            <a class="btn btn-default" href="<%=request.getContextPath()%>/Donars/"><i class="glyphicon glyphicon-refresh"></i> </a>
+                                            <a class="btn btn-default" href="<%=request.getContextPath()%>/Donors/"><i class="glyphicon glyphicon-refresh"></i> </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -119,9 +119,9 @@
                                             </td>
                                             <td><%=checkinput.checkValue(new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"))%></td>
                                             <td>
-                                                <a class="btn btn-md btn-info" href="<%=request.getContextPath()%>/Donars/edit/<%=donar.getId()%>">Edit</a>
-                                                <a class="btn btn-md btn-warning" href="<%=request.getContextPath()%>/Donars/view/<%=donar.getId()%>">View</a>
-                                                <a class="btn btn-md btn-danger" onclick="return confirm('Are you sure to delete this donar ?')" href="<%=request.getContextPath()%>/Donars/delete/<%=donar.getId()%>">Delete</a>
+                                                <a class="btn btn-md btn-info" href="<%=request.getContextPath()%>/Donors/edit/<%=donar.getId()%>">Edit</a>
+                                                <a class="btn btn-md btn-warning" href="<%=request.getContextPath()%>/Donors/view/<%=donar.getId()%>">View</a>
+                                                <a class="btn btn-md btn-danger" onclick="return confirm('Are you sure to delete this Donor ?')" href="<%=request.getContextPath()%>/Donors/delete/<%=donar.getId()%>">Delete</a>
                                             </td>
                                         </tr>
                                         <%}

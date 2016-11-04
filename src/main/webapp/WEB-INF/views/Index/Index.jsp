@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Home</title>
+        <title>Donors Diary - Home</title>
 
     </head>
 

@@ -19,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>View Donar</title>
+    <title>Donors Diary - View</title>
 </head>
 <body>
     <div id="wrapper">
@@ -33,7 +33,7 @@
                         <br/>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">View Donar</h3>
+                                <h3 class="panel-title">View Donor</h3>
                             </div>
                             <div class="panel-body">
                             <%
@@ -121,7 +121,7 @@
                             </div>
                             <br/>
                             <div class="form-group">
-                                <a class="btn btn-md btn-default" href="<%=request.getContextPath()%>/Donars/">Back</a>
+                                <a class="btn btn-md btn-default" href="<%=request.getContextPath()%>/Donors/">Back</a>
                             </div>
                             <%} else {%>
                             No Data Found !

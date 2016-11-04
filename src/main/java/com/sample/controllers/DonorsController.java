@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Scope("request")
 @Controller
-@RequestMapping("/Donars")
-public class DonarsController {
+@RequestMapping("/Donors")
+public class DonorsController {
 
     @Autowired
     private DonarsService donarsService;
@@ -39,7 +39,7 @@ public class DonarsController {
     public String getList(Model model, HttpServletRequest request) {
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
             model.addAttribute("donarsList", donarsService.findAll());
-            return "/Donars/List";
+            return "/Donors/List";
         } else {
             return "Auth/Login";
         }
@@ -89,10 +89,10 @@ public class DonarsController {
         ValidateUtils validateUtils = new ValidateUtils();
         CheckInput checkInput = new CheckInput();
         List<String> errors = new ArrayList<>();
-        validateUtils.checkNull(request, "donarname", "Donar Name", errors);
+        validateUtils.checkNull(request, "donarname", "Donor Name", errors);
         if (!errors.isEmpty()) {
             model.addAttribute("errors", errors);
-            return "Donars/Create";
+            return "Donors/Create";
         }
         Donars donar = new Donars();
         donar.setName(request.getParameter("donarname"));
@@ -122,14 +122,14 @@ public class DonarsController {
 //            model.addAttribute("m", "c");
 //        }
 
-        return "redirect:/Donars/";
+        return "redirect:/Donors/";
     }
 //
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Model model, HttpServletRequest request) {
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
-            return "Donars/Create";
+            return "Donors/Create";
         } else {
             return "redirect:/Auth/";
         }
@@ -144,7 +144,7 @@ public class DonarsController {
             if (donar != null) {
                 model.addAttribute("donar", donar);
             }
-            return "Donars/View";
+            return "Donors/View";
         } else {
             return "redirect:/Auth/";
         }
@@ -159,7 +159,7 @@ public class DonarsController {
             if (donar != null) {
                 model.addAttribute("donar", donar);
             }
-            return "Donars/Edit";
+            return "Donors/Edit";
         } else {
             return "Auth/Login";
         }
@@ -177,7 +177,7 @@ public class DonarsController {
             if (!errors.isEmpty()) {
                 model.addAttribute("errors", errors);
                 model.addAttribute("donar", donar);
-                return "Donars/Edit";
+                return "Donors/Edit";
             }
 
             donar.setName(request.getParameter("donarname"));
@@ -190,7 +190,7 @@ public class DonarsController {
             donarsService.save(donar);
             model.addAttribute("m", "e");
         }
-        return "redirect:/Donars/";
+        return "redirect:/Donors/";
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -201,7 +201,7 @@ public class DonarsController {
             donarsService.save(donar);
             model.addAttribute("m", "d");
         }
-        return "redirect:/Donars/";
+        return "redirect:/Donors/";
     }
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
@@ -227,7 +227,7 @@ public class DonarsController {
 
             List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
             model.addAttribute("donarsList", list);
-            return "Donars/List";
+            return "Donors/List";
         } else {
             return "redirect:/Auth/";
         }
