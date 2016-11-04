@@ -42,6 +42,8 @@ public class Donars {
     private Date modifiedDate;
     @Column
     private String createdBy;
+    @Column
+    private String modifiedBy;
 
     public String getId() {
         return id;
@@ -131,5 +133,14 @@ public class Donars {
         this.createdBy = createdBy;
     }
 
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
     
+    
+
 }

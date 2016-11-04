@@ -35,4 +35,9 @@ public class DonarsServiceImpl implements DonarsService {
     public Donars findById(String id) {
        return donarsRepository.findOne(id);
     }
+
+    @Override
+    public List<Donars> findWithLimitAndOffset(int length, int start) {
+        return donarsRepository.findWithLimitAndOffset(length,start);
+    }
 }

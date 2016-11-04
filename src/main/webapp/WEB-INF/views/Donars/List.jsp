@@ -96,6 +96,7 @@
                                             <td>
                                                 <a class="btn btn-md btn-info" href="<%=request.getContextPath()%>/Donars/edit/<%=donar.getId()%>">Edit</a>
                                                 <a class="btn btn-md btn-warning" href="<%=request.getContextPath()%>/Donars/view/<%=donar.getId()%>">View</a>
+                                                <a class="btn btn-md btn-danger" onclick="return confirm('Are you sure to delete this donar ?')" href="<%=request.getContextPath()%>/Donars/delete/<%=donar.getId()%>">Delete</a>
                                             </td>
                                         </tr>
                                         <%}
@@ -138,13 +139,17 @@
 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-            $(document).ready(function () {
-                $('#dataTables-example').DataTable({
-                    responsive: true,
-                    aaSorting: [],
-                    autoWidth: false
-                });
-            });
+                                                    $(document).ready(function () {
+                                                        $('#dataTables-example').DataTable({
+                                                            responsive: true,
+                                                            aaSorting: [],
+                                                            autoWidth: false
+//                                                            "processing": true,
+//                                                            "serverSide": true,
+//                                                            "ajax": "<%=request.getContextPath()%>/Donars/list_processing",
+//                                                            "deferLoading": 55
+                                                        });
+                                                    });
         </script>
 
     </body>

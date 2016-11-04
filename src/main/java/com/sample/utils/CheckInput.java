@@ -33,6 +33,13 @@ public class CheckInput {
         return "";
     }
 
+    public String checkForNull(String value) {
+        if (!value.equals("")) {
+            return value;
+        }
+        return "-";
+    }
+
     public String checkValueEdit(String value, String valueReq) {
         if (value != null) {
             if (valueReq != null) {

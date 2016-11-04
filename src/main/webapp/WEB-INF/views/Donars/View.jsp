@@ -8,7 +8,6 @@
 <%@page import="java.util.Iterator"%>
 <%@page import="com.sample.utils.CheckInput"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.List"%>
 <%@page import="com.sample.entities.Donars"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Edit Task</title>
+    <title>View Donar</title>
 </head>
 <body>
     <div id="wrapper">
@@ -30,11 +29,11 @@
             <div id="page-wrapper">
 
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-10">
                         <br/>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">View Task</h3>
+                                <h3 class="panel-title">View Donar</h3>
                             </div>
                             <div class="panel-body">
                             <%
@@ -43,58 +42,87 @@
                                     Donars donar = (Donars) request.getAttribute("donar");
 
                             %>
-
-                            <fieldset>
+                            <div class="row">
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label class="col-md-4 ">Donar Name : </label>
-                                        <div class="col-md-4">
-                                            <span><%=donar.getName()%> </span>
+                                        <label class="col-sm-4 control-label">First Name : </label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getName())%>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Address : </label>
-                                        <div class="col-md-4">
-                                            <span><%=checkInput.checkValue(donar.getAddress())%> </span>
+                                        <label class="col-sm-4 control-label">Address : </label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getAddress())%>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4">Mobile : </label>
-                                        <div class="col-md-4">
-                                            <span><%=checkInput.checkValue(donar.getMobile())%> </span>
+                                        <label class="col-sm-4 control-label">Mobile :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getMobile())%>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4">Phone : </label>
-                                        <div class="col-sm-4">
-                                            <span><%=checkInput.checkValue(donar.getPhone())%> </span>
+                                        <label class="col-sm-4 control-label">Phone :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getPhone())%>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4">First Donation Date : </label>
-                                        <div class="col-sm-4">
-                                            <span><%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"))%> </span>
+                                        <label class="col-sm-4 control-label">First Donation Date :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"))%>
+                                            </p>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-4">Created Date : </label>
-                                        <div class="col-sm-4">
-                                            <span><%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getCreatedDate(), "dd-MMMM-yyyy, hh:mm a"))%> </span>
+                                        <label class="col-sm-4 control-label">Created Date :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getCreatedDate(), "dd-MMMM-yyyy"))%>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-4">Last Modified Date : </label>
-                                        <div class="col-sm-4">
-                                            <span><%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getModifiedDate(), "dd-MMMM-yyyy, hh:mm a"))%> </span>
+                                        <label class="col-sm-4 control-label">Created By :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getCreatedBy())%>
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <a class="btn btn-md btn-default" href="<%=request.getContextPath()%>/Donars/">Back</a>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Last Changing Date :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(new DateUtils().dateWithFormat(donar.getModifiedDate(), "dd-MMMM-yyyy"))%>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">Last Changed By :</label>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <%=checkInput.checkValue(donar.getModifiedBy())%>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                            </form>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <a class="btn btn-md btn-default" href="<%=request.getContextPath()%>/Donars/">Back</a>
+                            </div>
                             <%} else {%>
                             No Data Found !
                             <%}%>

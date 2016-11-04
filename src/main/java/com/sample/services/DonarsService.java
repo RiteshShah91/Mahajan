@@ -19,5 +19,7 @@ public interface DonarsService {
 
     public Donars findById(String id);
 
+    public List<Donars> findWithLimitAndOffset(int length, int start);
+
 
 }
