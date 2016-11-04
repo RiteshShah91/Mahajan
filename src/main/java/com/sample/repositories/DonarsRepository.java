@@ -21,4 +21,7 @@ public interface DonarsRepository extends JpaRepository<Donars, String> {
     @Query(nativeQuery = true, value = "select * from donars d where d.status != 'Deleted' order by d.createddate desc LIMIT ?1 OFFSET ?2")
     public List<Donars> findWithLimitAndOffset(int length, int start);
 
+    @Query(nativeQuery = true, value = "select count(id) from donars")
+    public long findCount();
+
 }

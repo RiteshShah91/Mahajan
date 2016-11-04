@@ -89,4 +89,9 @@ public class DonarsServiceImpl implements DonarsService {
         return q.getResultList();
     }
 
+    @Override
+    public long findCount() {
+        return donarsRepository.findCount();
+    }
+
 }

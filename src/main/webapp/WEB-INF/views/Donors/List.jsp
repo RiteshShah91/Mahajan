@@ -168,11 +168,11 @@
                                                         $('#dataTables-example').DataTable({
                                                             responsive: true,
                                                             aaSorting: [],
-                                                            autoWidth: false
-//                                                            "processing": true,
-//                                                            "serverSide": true,
-//                                                            "ajax": "<%=request.getContextPath()%>/Donars/list_processing",
-//                                                            "deferLoading": 55
+                                                            autoWidth: false,
+                                                            "processing": true,
+                                                            "serverSide": true,
+                                                            "ajax": "<%=request.getContextPath()%>/Donors/list_processing",
+                                                            "deferLoading": 100
                                                         });
                                                     });
         </script>

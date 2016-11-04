@@ -67,18 +67,22 @@ public class DonorsController {
 
             List<com.sample.entities.Donars> donarlist = null;
             donarlist = donarsService.findWithLimitAndOffset(length, start);
-            jSONObject.put("recordsTotal", 100);
+            long totalRecord = donarsService.findCount();
             for (com.sample.entities.Donars donar : donarlist) {
                 System.out.println("Id : " + donar.getId() + "\t Name : " + donar.getName());
-                JSONObject dataDetailsJson = new JSONObject();
-                dataDetailsJson.put("name", donar.getName());
-                dataDetailsJson.put("mobile", donar.getMobile());
-                dataDetailsJson.put("phone", donar.getPhone());
-                dataDetailsJson.put("phone", new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"));
-                jsonArray.add(dataDetailsJson);
+                JSONArray jsonDataArray = new JSONArray();
+                jsonDataArray.add(donar.getName());
+                jsonDataArray.add(donar.getMobile());
+                jsonDataArray.add(donar.getPhone());
+                jsonDataArray.add(new DateUtils().dateWithFormat(donar.getDateOfFirstDonation(), "dd-MMMM-yyyy"));
+                jsonDataArray.add("<a class=\"btn btn-md btn-info\" href=\"" + request.getContextPath() + "/Donors/edit/" + donar.getId() + "\">Edit</a> <a class=\"btn btn-md btn-warning\" href=\"" + request.getContextPath() + "/Donors/view/" + donar.getId() + "\">View</a> <a class=\"btn btn-md btn-danger\" onclick=\"return confirm('Are you sure to delete this Donor ?')\" href=\"" + request.getContextPath() + "/Donors/delete/" + donar.getId() + "\">Delete</a>");
+                jsonArray.add(jsonDataArray);
             }
-
+            jSONObject.put("draw", draw);
+            jSONObject.put("recordsTotal", totalRecord);
+            jSONObject.put("recordsFiltered", totalRecord);
             jSONObject.put("data", jsonArray);
+            System.out.println("Json Data : " + jSONObject.toString());
             return jSONObject;
         }
         return null;
@@ -107,20 +111,20 @@ public class DonorsController {
         donarsService.save(donar);
         model.addAttribute("m", "c");
 
-//        for (int i = 0; i < 100; i++) {
-//            Donars donar1 = new Donars();
-//            donar1.setName(request.getParameter("donarname") + i);
-//            donar1.setPhone(request.getParameter("phone") + i);
-//            donar1.setMobile(request.getParameter("mobile"));
-//            donar1.setAddress(request.getParameter("address") + i);
-//            donar1.setDateOfFirstDonation(new DateUtils().stringToDate(request.getParameter("donation_date"), "dd-MMMM-yyyy"));
-//            donar1.setCreatedDate(new Date());
-//            donar1.setModifiedDate(new Date());
-//            donar1.setStatus("Active");
-//            donar1.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
-//            donarsService.save(donar1);
-//            model.addAttribute("m", "c");
-//        }
+        for (int i = 0; i < 5000; i++) {
+            Donars donar1 = new Donars();
+            donar1.setName(request.getParameter("donarname") + i);
+            donar1.setPhone(request.getParameter("phone") + i);
+            donar1.setMobile(request.getParameter("mobile"));
+            donar1.setAddress(request.getParameter("address") + i);
+            donar1.setDateOfFirstDonation(new DateUtils().stringToDate(request.getParameter("donation_date"), "dd-MMMM-yyyy"));
+            donar1.setCreatedDate(new Date());
+            donar1.setModifiedDate(new Date());
+            donar1.setStatus("Active");
+            donar1.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
+            donarsService.save(donar1);
+            model.addAttribute("m", "c");
+        }
 
         return "redirect:/Donors/";
     }

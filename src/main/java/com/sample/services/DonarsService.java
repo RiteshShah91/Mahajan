@@ -23,5 +23,7 @@ public interface DonarsService {
 
     public List<Donars> findByFilterParameter(String mobile, String name, String address);
 
+    public long findCount();
+
 
 }
