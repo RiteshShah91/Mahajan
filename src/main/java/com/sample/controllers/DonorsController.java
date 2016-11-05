@@ -14,6 +14,7 @@ import com.sample.utils.ValidateUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -56,14 +57,14 @@ public class DonorsController {
             int start = Integer.parseInt(request.getParameter("start"));
             int length = Integer.parseInt(request.getParameter("length"));
             int draw = Integer.parseInt(request.getParameter("draw"));
-            System.out.println("Start :" + start + "  Length : " + length);
-            while (parameterNames.hasMoreElements()) {
-                String paramName = parameterNames.nextElement();
-                String[] paramValues = request.getParameterValues(paramName);
-                for (String paramValue : paramValues) {
-                    System.out.println("Name :" + paramName + "  Value : " + paramValue);
-                }
-            }
+//            System.out.println("Start :" + start + "  Length : " + length);
+//            while (parameterNames.hasMoreElements()) {
+//                String paramName = parameterNames.nextElement();
+//                String[] paramValues = request.getParameterValues(paramName);
+//                for (String paramValue : paramValues) {
+//                    System.out.println("Name :" + paramName + "  Value : " + paramValue);
+//                }
+//            }
 
             List<com.sample.entities.Donars> donarlist = null;
             donarlist = donarsService.findWithLimitAndOffset(length, start);
@@ -82,7 +83,7 @@ public class DonorsController {
             jSONObject.put("recordsTotal", totalRecord);
             jSONObject.put("recordsFiltered", totalRecord);
             jSONObject.put("data", jsonArray);
-            System.out.println("Json Data : " + jSONObject.toString());
+//            System.out.println("Json Data : " + jSONObject.toString());
             return jSONObject;
         }
         return null;
@@ -212,24 +213,24 @@ public class DonorsController {
     public String filterSearch(HttpServletRequest request, Model model) {
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
 
-            String mobile = "", name = "", address = "";
+            HashMap<String, String> queryParamMap = new HashMap<>();
             if (request.getParameter("mobile") != null) {
-                if (request.getParameter("mobile").length() > 0) {
-                    mobile = request.getParameter("mobile");
+                if (request.getParameter("mobile").trim().length() > 0) {
+                    queryParamMap.put("mobile", request.getParameter("mobile"));
                 }
             }
             if (request.getParameter("name") != null) {
-                if (request.getParameter("name").length() > 0) {
-                    name = request.getParameter("name");
+                if (request.getParameter("name").trim().length() > 0) {
+                    queryParamMap.put("donorname", request.getParameter("name"));
                 }
             }
             if (request.getParameter("address") != null) {
-                if (request.getParameter("address").length() > 0) {
-                    address = request.getParameter("address");
+                if (request.getParameter("address").trim().length() > 0) {
+                    queryParamMap.put("address", request.getParameter("address"));
                 }
             }
-
-            List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
+            List<Donars> list = donarsService.commonFindByFilterParameter(queryParamMap, 10, 0);
+//            List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
             model.addAttribute("donarsList", list);
             return "Donors/List";
         } else {
