@@ -28,5 +28,7 @@ public interface DonarsService {
 
     public long findCount();
 
+    public long findCountByFilterParameter(HashMap<String, String> paramMap);
+
 
 }

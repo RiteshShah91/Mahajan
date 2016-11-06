@@ -23,9 +23,9 @@ public class DataSourceConfig {
 //        BasicDataSource dataSource = new BasicDataSource();
 //
 //        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://192.168.1.100:5432/test123");
+//        dataSource.setUrl("jdbc:postgresql://localhost:5432/test123");
 //        dataSource.setUsername("postgres");
-//        dataSource.setPassword("mama");
+//        dataSource.setPassword("smartant");
 //
 //        dataSource.setMaxActive(100);
 //        dataSource.setMaxIdle(30);

@@ -13,7 +13,6 @@ import com.sample.utils.SessionUtils;
 import com.sample.utils.ValidateUtils;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +39,7 @@ public class DonorsController {
     public String getList(Model model, HttpServletRequest request) {
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
             model.addAttribute("donarsList", donarsService.findAll());
+            new SessionUtils().removeSessionValue(request, "queryParamMap");
             return "/Donors/List";
         } else {
             return "Auth/Login";
@@ -53,7 +53,7 @@ public class DonorsController {
         JSONObject jSONObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
-            Enumeration<String> parameterNames = request.getParameterNames();
+//            Enumeration<String> parameterNames = request.getParameterNames();
             int start = Integer.parseInt(request.getParameter("start"));
             int length = Integer.parseInt(request.getParameter("length"));
             int draw = Integer.parseInt(request.getParameter("draw"));
@@ -67,10 +67,19 @@ public class DonorsController {
 //            }
 
             List<com.sample.entities.Donars> donarlist = null;
-            donarlist = donarsService.findWithLimitAndOffset(length, start);
-            long totalRecord = donarsService.findCount();
+            long totalRecord = 0;
+            if (new SessionUtils().getSessionValue(request, "queryParamMap") != null) {
+                HashMap<String, String> paramMap = (HashMap<String, String>) new SessionUtils().getSessionValue(request, "queryParamMap");
+                totalRecord = donarsService.findCountByFilterParameter(paramMap);
+//                totalRecord = donarlist.size();
+                donarlist = donarsService.commonFindByFilterParameter(paramMap, length, start);
+
+            } else {
+                donarlist = donarsService.findWithLimitAndOffset(length, start);
+                totalRecord = donarsService.findCount();
+            }
             for (com.sample.entities.Donars donar : donarlist) {
-                System.out.println("Id : " + donar.getId() + "\t Name : " + donar.getName());
+//                System.out.println("Id : " + donar.getId() + "\t Name : " + donar.getName());
                 JSONArray jsonDataArray = new JSONArray();
                 jsonDataArray.add(donar.getName());
                 jsonDataArray.add(donar.getMobile());
@@ -229,6 +238,7 @@ public class DonorsController {
                     queryParamMap.put("address", request.getParameter("address"));
                 }
             }
+            new SessionUtils().setSessionValue(request, "queryParamMap", queryParamMap);
             List<Donars> list = donarsService.commonFindByFilterParameter(queryParamMap, 10, 0);
 //            List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
             model.addAttribute("donarsList", list);
