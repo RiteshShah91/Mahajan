@@ -38,7 +38,36 @@ public class DonorsController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getList(Model model, HttpServletRequest request) {
         if (new SessionUtils().getSessionValue(request, "admin") != null) {
-            model.addAttribute("donarsList", donarsService.findAll());
+            List<Donars> donarList = new ArrayList<>();
+            long totalRecord = 0;
+            if (new SessionUtils().getSessionValue(request, "queryParamMap") != null) {
+                HashMap<String, String> paramMap = (HashMap<String, String>) new SessionUtils().getSessionValue(request, "queryParamMap");
+                donarList = donarsService.findCountByFilterParameter(paramMap);
+                totalRecord = donarList.size();
+                donarList = donarsService.commonFindByFilterParameter(paramMap, 10, 0);
+            } else {
+                donarList = donarsService.findAll();
+                totalRecord = donarsService.findCount();
+            }
+
+            model.addAttribute("donarsList", donarList);
+            model.addAttribute("count", totalRecord);
+            return "/Donors/List";
+        } else {
+            return "Auth/Login";
+        }
+    }
+
+    @RequestMapping(value = "/reset", method = RequestMethod.GET)
+    public String getResetList(Model model, HttpServletRequest request) {
+        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+            new SessionUtils().removeSessionValue(request, "queryParamMap");
+            List<Donars> donarList = new ArrayList<>();
+            long totalRecord = 0;
+            donarList = donarsService.findAll();
+            totalRecord = donarsService.findCount();
+            model.addAttribute("donarsList", donarList);
+            model.addAttribute("count", totalRecord);
             new SessionUtils().removeSessionValue(request, "queryParamMap");
             return "/Donors/List";
         } else {
@@ -70,10 +99,9 @@ public class DonorsController {
             long totalRecord = 0;
             if (new SessionUtils().getSessionValue(request, "queryParamMap") != null) {
                 HashMap<String, String> paramMap = (HashMap<String, String>) new SessionUtils().getSessionValue(request, "queryParamMap");
-                totalRecord = donarsService.findCountByFilterParameter(paramMap);
-//                totalRecord = donarlist.size();
+                donarlist = donarsService.findCountByFilterParameter(paramMap);
+                totalRecord = donarlist.size();
                 donarlist = donarsService.commonFindByFilterParameter(paramMap, length, start);
-
             } else {
                 donarlist = donarsService.findWithLimitAndOffset(length, start);
                 totalRecord = donarsService.findCount();
@@ -239,9 +267,11 @@ public class DonorsController {
                 }
             }
             new SessionUtils().setSessionValue(request, "queryParamMap", queryParamMap);
-            List<Donars> list = donarsService.commonFindByFilterParameter(queryParamMap, 10, 0);
+            List<Donars> donarList = donarsService.commonFindByFilterParameter(queryParamMap, 10, 0);
 //            List<Donars> list = donarsService.findByFilterParameter(mobile, name, address);
-            model.addAttribute("donarsList", list);
+            model.addAttribute("donarsList", donarList);
+//            long totalRecord = donarsService.findCountByFilterParameter(queryParamMap);
+//            model.addAttribute("count", totalRecord);
             return "Donors/List";
         } else {
             return "redirect:/Auth/";

@@ -5,6 +5,7 @@
  */
 package com.sample.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-public class Donars {
+public class Donars implements Serializable {
+    private static final long serialVersionUID = -2836528382783195345L;
 
     @Id
     private String id;

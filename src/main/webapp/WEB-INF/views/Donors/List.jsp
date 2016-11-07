@@ -88,7 +88,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-default" type="submit" value="Search"><i class="glyphicon glyphicon-search"></i></button>
-                                            <a class="btn btn-default" href="<%=request.getContextPath()%>/Donors/"><i class="glyphicon glyphicon-refresh"></i> </a>
+                                            <a class="btn btn-default" href="<%=request.getContextPath()%>/Donors/reset"><i class="glyphicon glyphicon-refresh"></i> </a>
                                         </td>
                                     </tr>
                                 </table>
@@ -172,7 +172,7 @@
                                                             "processing": true,
                                                             "serverSide": true,
                                                             "ajax": "<%=request.getContextPath()%>/Donors/list_processing",
-                                                            "deferLoading": 100
+                                                            "deferLoading": <%=request.getAttribute("count")%>
                                                         });
                                                     });
         </script>

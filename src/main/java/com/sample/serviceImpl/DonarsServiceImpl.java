@@ -10,12 +10,19 @@ import com.sample.entities.Donars;
 import com.sample.repositories.DonarsRepository;
 import com.sample.services.DonarsService;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,8 +61,6 @@ public class DonarsServiceImpl implements DonarsService {
     public List<Donars> findByFilterParameter(String mobile, String name, String address) {
 
         HashMap<String, String> paramMap = new HashMap<>();
-//        paramMap.put("mobile", mobile);
-//        paramMap.put("donarname",name);
 
         StringBuilder query = new StringBuilder("select * from donars d where");
 
@@ -142,43 +147,42 @@ public class DonarsServiceImpl implements DonarsService {
     }
 
     @Override
-    public long findCountByFilterParameter(HashMap<String, String> paramMap) {
+    public List<Donars> findCountByFilterParameter(HashMap<String, String> paramMap) {
         HashMap<String, String> queryParamMap = new HashMap<>();
-//        paramMap.put("mobile", mobile);
-//        paramMap.put("donarname",name);
+        StringBuilder query = new StringBuilder("select * from donars where");
 
-        StringBuilder query = new StringBuilder("select count(id) from donars d where");
-
-        query.append(" d.status != :status");
+        query.append(" status != :status");
         queryParamMap.put("status", "Deleted");
 
         if (!(paramMap.get("mobile") == null || paramMap.get("mobile").equals(""))) {
-            query.append(" and d.mobile LIKE :mobile");
+            query.append(" and mobile LIKE :mobile");
             queryParamMap.put("mobile", "%" + paramMap.get("mobile") + "%");
         }
 
         if (!(paramMap.get("donorname") == null || paramMap.get("donorname").equals(""))) {
             String[] combineName = paramMap.get("donorname").split("\\s");
             if (combineName.length > 1) {
-                query.append(" and UPPER(d.name) LIKE :fname");
+                query.append(" and UPPER(name) LIKE :fname");
                 queryParamMap.put("fname", "%" + combineName[0].toUpperCase() + "%");
             } else {
-                query.append(" and UPPER(d.name) LIKE :sname ");
+                query.append(" and UPPER(name) LIKE :sname ");
                 queryParamMap.put("sname", "%" + paramMap.get("donorname").toUpperCase() + "%");
             }
         }
 
         if (!(paramMap.get("address") == null || paramMap.get("address").equals(""))) {
-            query.append(" and UPPER(d.address) LIKE :address");
+            query.append(" and UPPER(address) LIKE :address");
             queryParamMap.put("address", "%" + paramMap.get("address").toUpperCase() + "%");
         }
 
-        Query q = entityManager.createNativeQuery(query.toString());
+        query.append(" order by createddate desc");
+
+        Query q = entityManager.createNativeQuery(query.toString(), Donars.class);
         for (Map.Entry pair : queryParamMap.entrySet()) {
             q.setParameter(pair.getKey().toString(), pair.getValue());
         }
 
-        return q.getFirstResult();
-    }
+        return q.getResultList();
 
+    }
 }
