@@ -45,7 +45,7 @@
         </div>
         <!-- /.navbar-header -->
 
-        <ul class="nav navbar-top-links navbar-right">
+<!--        <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -94,9 +94,9 @@
                         </a>
                     </li>
                 </ul>
-                <!-- /.dropdown-messages -->
+                 /.dropdown-messages 
             </li>
-            <!-- /.dropdown -->
+             /.dropdown 
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -173,9 +173,9 @@
                         </a>
                     </li>
                 </ul>
-                <!-- /.dropdown-tasks -->
+                 /.dropdown-tasks 
             </li>
-            <!-- /.dropdown -->
+             /.dropdown 
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -233,9 +233,9 @@
                         </a>
                     </li>
                 </ul>
-                <!-- /.dropdown-alerts -->
+                 /.dropdown-alerts 
             </li>
-            <!-- /.dropdown -->
+             /.dropdown 
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -249,10 +249,10 @@
                     <li><a href="<%=request.getContextPath()%>/Auth/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
-                <!-- /.dropdown-user -->
+                 /.dropdown-user 
             </li>
-            <!-- /.dropdown -->
-        </ul>
+             /.dropdown 
+        </ul>-->
         <!-- /.navbar-top-links -->
 
         <div class="navbar-default sidebar" role="navigation">
@@ -269,12 +269,12 @@
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li>
-                        <a href="<%=request.getContextPath()%>/Auth/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="<%=request.getContextPath()%>/Users/"><i class="fa fa-user fa-fw"></i> Users</a>
-                    </li>
+                    <%--                    <li>
+                                            <a href="<%=request.getContextPath()%>/Auth/"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <a href="<%=request.getContextPath()%>/Users/"><i class="fa fa-user fa-fw"></i> Users</a>
+                                        </li>--%>
                     <li>
                         <a href="<%=request.getContextPath()%>/Donors/"><i class="fa fa-users fa-fw"></i> Donors</a>
                     </li>

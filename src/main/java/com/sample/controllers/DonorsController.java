@@ -37,7 +37,7 @@ public class DonorsController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getList(Model model, HttpServletRequest request) {
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
             List<Donars> donarList = new ArrayList<>();
             long totalRecord = 0;
             if (new SessionUtils().getSessionValue(request, "queryParamMap") != null) {
@@ -53,14 +53,14 @@ public class DonorsController {
             model.addAttribute("donarsList", donarList);
             model.addAttribute("count", totalRecord);
             return "/Donors/List";
-        } else {
-            return "Auth/Login";
-        }
+//        } else {
+//            return "Auth/Login";
+//        }
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
     public String getResetList(Model model, HttpServletRequest request) {
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
             new SessionUtils().removeSessionValue(request, "queryParamMap");
             List<Donars> donarList = new ArrayList<>();
             long totalRecord = 0;
@@ -70,9 +70,9 @@ public class DonorsController {
             model.addAttribute("count", totalRecord);
             new SessionUtils().removeSessionValue(request, "queryParamMap");
             return "/Donors/List";
-        } else {
-            return "Auth/Login";
-        }
+//        } else {
+//            return "Auth/Login";
+//        }
     }
 
     @RequestMapping(value = "/list_processing", method = RequestMethod.GET)
@@ -81,7 +81,7 @@ public class DonorsController {
 
         JSONObject jSONObject = new JSONObject();
         JSONArray jsonArray = new JSONArray();
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
 //            Enumeration<String> parameterNames = request.getParameterNames();
             int start = Integer.parseInt(request.getParameter("start"));
             int length = Integer.parseInt(request.getParameter("length"));
@@ -122,8 +122,8 @@ public class DonorsController {
             jSONObject.put("data", jsonArray);
 //            System.out.println("Json Data : " + jSONObject.toString());
             return jSONObject;
-        }
-        return null;
+//        }
+//        return null;
     }
 
     @RequestMapping(value = "/postcreate", method = RequestMethod.POST)
@@ -145,7 +145,7 @@ public class DonorsController {
         donar.setCreatedDate(new Date());
         donar.setModifiedDate(new Date());
         donar.setStatus("Active");
-        donar.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
+        donar.setCreatedBy("Admin");
         donarsService.save(donar);
         model.addAttribute("m", "c");
 
@@ -170,41 +170,41 @@ public class DonorsController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String preCreate(Model model, HttpServletRequest request) {
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
             return "Donors/Create";
-        } else {
-            return "redirect:/Auth/";
-        }
+//        } else {
+//            return "redirect:/Auth/";
+//        }
     }
 
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String preCreate(Model model, @PathVariable("id") String id, HttpServletRequest request) {
 
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
             Donars donar = new Donars();
             donar = donarsService.findById(id);
             if (donar != null) {
                 model.addAttribute("donar", donar);
             }
             return "Donors/View";
-        } else {
-            return "redirect:/Auth/";
-        }
+//        } else {
+//            return "redirect:/Auth/";
+//        }
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(Model model, @PathVariable("id") String id, HttpServletRequest request) {
 
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
             Donars donar = new Donars();
             donar = donarsService.findById(id);
             if (donar != null) {
                 model.addAttribute("donar", donar);
             }
             return "Donors/Edit";
-        } else {
-            return "Auth/Login";
-        }
+//        } else {
+//            return "Auth/Login";
+//        }
     }
 
     @RequestMapping(value = "/postedit/{id}", method = RequestMethod.POST)
@@ -248,7 +248,7 @@ public class DonorsController {
 
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public String filterSearch(HttpServletRequest request, Model model) {
-        if (new SessionUtils().getSessionValue(request, "admin") != null) {
+//        if (new SessionUtils().getSessionValue(request, "admin") != null) {
 
             HashMap<String, String> queryParamMap = new HashMap<>();
             if (request.getParameter("mobile") != null) {
@@ -273,9 +273,9 @@ public class DonorsController {
 //            long totalRecord = donarsService.findCountByFilterParameter(queryParamMap);
 //            model.addAttribute("count", totalRecord);
             return "Donors/List";
-        } else {
-            return "redirect:/Auth/";
-        }
+//        } else {
+//            return "redirect:/Auth/";
+//        }
     }
 
 }
