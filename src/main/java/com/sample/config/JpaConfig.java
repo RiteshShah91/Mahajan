@@ -1,7 +1,6 @@
 package com.sample.config;
 
-import java.util.Properties;
-import javax.persistence.EntityManagerFactory;
+import java.util.Collections;
 
 import javax.sql.DataSource;
 
@@ -9,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.jta.JtaTransactionManager;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 @Configuration
 public class JpaConfig {
@@ -22,6 +20,7 @@ public class JpaConfig {
     @Autowired
     private DataSource dataSource;
 
+    /*
     @Bean
     public AbstractPlatformTransactionManager transactionManager() {
         Properties p = new Properties();
@@ -58,5 +57,29 @@ public class JpaConfig {
         bean.afterPropertiesSet();
         return bean.getObject();
     }
+     */
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
+        HibernateJpaVendorAdapter hibernateJpa = new HibernateJpaVendorAdapter();
+        hibernateJpa.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+        hibernateJpa.setGenerateDdl(true);
+        //hibernateJpa.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
+        hibernateJpa.setShowSql(false);
+
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        emf.setPackagesToScan("com.sample");
+        emf.setJpaVendorAdapter(hibernateJpa);
+        emf.setPersistenceUnitName("dw");
+        emf.setJpaPropertyMap(Collections.singletonMap("javax.persistence.validation.mode", "none"));
+        return emf;
+    }
+
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        JpaTransactionManager txnMgr = new JpaTransactionManager();
+        txnMgr.setEntityManagerFactory(entityManagerFactory().getObject());
+        return txnMgr;
+    }
 }
