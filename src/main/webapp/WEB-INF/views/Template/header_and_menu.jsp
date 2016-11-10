@@ -41,7 +41,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<%=request.getContextPath()%>/Auth/">Donors Diary</a>
+            <a class="navbar-brand" href="<%=request.getContextPath()%>/Auth/Donors/">Donors Diary</a>
         </div>
         <!-- /.navbar-header -->
 
