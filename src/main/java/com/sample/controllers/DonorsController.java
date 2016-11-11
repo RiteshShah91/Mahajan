@@ -159,7 +159,7 @@ public class DonorsController {
             donar1.setCreatedDate(new Date());
             donar1.setModifiedDate(new Date());
             donar1.setStatus("Active");
-            donar1.setCreatedBy(new SessionUtils().getSessionValue(request, "admin").toString());
+            donar1.setCreatedBy("Admin");
             donarsService.save(donar1);
             model.addAttribute("m", "c");
         }
@@ -228,7 +228,7 @@ public class DonorsController {
             donar.setAddress(checkInput.checkForNull(request.getParameter("address")));
             donar.setDateOfFirstDonation(new DateUtils().stringToDate(request.getParameter("donation_date"), "dd-MMMM-yyyy"));
             donar.setModifiedDate(new Date());
-            donar.setModifiedBy(new SessionUtils().getSessionValue(request, "admin").toString());
+            donar.setModifiedBy("Admin");
             donarsService.save(donar);
             model.addAttribute("m", "e");
         }
